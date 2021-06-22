@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_rss/costum_classes/news.dart';
+import 'package:mini_rss/backend/html_to_content.dart';
 
 class NewsDetails extends StatelessWidget {
   late News news;
@@ -36,11 +37,18 @@ class NewsDetails extends StatelessWidget {
             ),
 
           ),
-          child: Column(
+          child: Expanded(
+            child: Column(
+              children: [
+                HtmlToContent()
+              ],
+            ),
+          )
+        ),/*Column(
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: Image.network(news.indexPicture),
+                child: news.getPicture(500, 200),
               ),
               Align(
                 alignment: Alignment.topRight,
@@ -54,7 +62,7 @@ class NewsDetails extends StatelessWidget {
               Align(
                 alignment: Alignment.topLeft,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
                   child: Text(
                     news.title,
                     style: TextStyle(
@@ -68,18 +76,14 @@ class NewsDetails extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                  child: Text(
-                    news.title,
-                    style: TextStyle(
-                        fontSize: 20,
-                    ),
-                  ),
+                  child: /*HtmlToContent()*/Text("asd")
                 ),
               )
             ],
           ),
         ),
-      ),
+      ),*/
+      )
     );
   }
 }

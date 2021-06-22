@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_rss/costum_classes/news.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
+import 'package:webfeed/webfeed.dart';
 
 class NewsListView extends StatefulWidget {
   const NewsListView({Key? key}) : super(key: key);
@@ -11,55 +14,31 @@ class NewsListView extends StatefulWidget {
 
 class _NewsListViewState extends State<NewsListView> {
 
+  //list for the news
+  List<News> news=[];
 
-  List<News> news = [
-    News("2021-05-14 17:00:34", "Cím 1", "Összegzés 1", "Content 1",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:30", "Cím 2", "Összegzés 2", "Content 2",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:40", "Cím 3", "Összegzés 3", "Content 3",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:37", "Cím 4", "Összegzés 4", "Content 4",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:31", "Cím 5", "Összegzés 5", "Content 5",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:34", "Cím 6", "Összegzés 6", "Content 6",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:34", "Cím 1", "Összegzés 1", "Content 1",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:30", "Cím 2", "Összegzés 2", "Content 2",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:40", "Cím 3", "Összegzés 3", "Content 3",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:37", "Cím 4", "Összegzés 4", "Content 4",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:31", "Cím 5", "Összegzés 5", "Content 5",
-        'https://picsum.photos/250?image=9'),
-    News("2021-05-14 17:00:34", "Cím 6", "Összegzés 6", "Content 6",
-        'https://picsum.photos/250?image=9')
-  ];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    news.sort((a, b) => a.publicationTime.compareTo(b.publicationTime));
-  }
-
+  //opens a news and deletes it
   void openNews(News n){
-    Navigator.pushNamed(context, '/detailed', arguments: n);
-    setState(() {
+    Navigator.pushNamed(context, '/detailed', arguments: n);//open
+
+    setState(() {//delete
       news.remove(n);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    //get the news list
+   setState(() {
+     final t=ModalRoute.of(context)!.settings.arguments as List<News>;
+     news=t;
+   });
 
+    return Scaffold(
+      //appbar
       appBar: AppBar(
         title: Image(
-          image: AssetImage(
+          image: AssetImage(//index logo
             'assets/index.png',
           ),
           width: 500,
@@ -81,49 +60,56 @@ class _NewsListViewState extends State<NewsListView> {
               bottom: BorderSide(width: 3.0, color: Colors.black),
             ),
           ),
-          child: ListView.builder(
+          child: ListView.builder(//listview
             itemCount: news.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.fromLTRB(3, 0, 3, 7),
                 child: GestureDetector(
-                  onTap: () => {openNews(news[index])},
+                  onTap: () => {openNews(news[index])},//opens the news
                   child: Card(//every item will be a card
-
                     child: Row(//a card contains two row
                       children: [
                         Padding(//in the first raw will be the index picture
-                          padding: EdgeInsets.fromLTRB(10, 10, 20, 10),
-                          child: Image.network(
-                            news[index].indexPicture,
-                            width: 70,
-                            height: 70,
-                          ),
+                          padding: EdgeInsets.fromLTRB(5, 5, 20, 5),
+                          child: news[index].getPicture(90, 60),
                         ),
-                        Column(//in the second row will be tha title, summaray and publication date in 3 columns
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              news[index].title,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold
-                              ),
+                        Flexible(//flexbox for the columns so it wont overflow
+                          fit:FlexFit.tight,
+                          child: SizedBox(
+                            height: 75,
+                            child: Column(//in the second row will be tha title, summaray and publication date in 3 columns
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(//title
+                                  news[index].title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                  maxLines: 1,
+                                ),
+                                SizedBox(height: 5,),
+                                Text(//summary
+                                  news[index].summary,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  ),
+                                  maxLines: 1,
+                                ),
+                                SizedBox(height: 5,),
+                                Text(//pulication date
+                                  news[index].getTime(),
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                  ),
+                                )
+                              ],
                             ),
-                            Text(
-                              news[index].summary,
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            Text(
-                              news[index].getTime(),
-                              style: TextStyle(
-                                fontSize: 13,
-                              ),
-                            )
-                          ],
+                          ),
                         )
                       ],
                     ),

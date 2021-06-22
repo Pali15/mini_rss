@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 //represents a news
@@ -7,6 +8,8 @@ class News{
   late String summary;//summary of the news
   late String content;//content off the news
   late String indexPicture;//URL for the index picture
+  late String newsPicture;
+
 
   News(String publication, String title, String summary, String content, String indexpicture){
     this.title=title;
@@ -24,5 +27,23 @@ class News{
     String second=publicationTime.second<10?'0${publicationTime.second}':publicationTime.second.toString();
 
     return '${publicationTime.year}-$month-$day $hour:$minute:$second';
+  }
+
+
+  /*
+  returns the indexpicture
+  double width_-width of the picture
+  double height_-height of the picture
+   */
+  Widget getPicture(double width_, double height_){
+    if(indexPicture=="none"){//if it doesnt have a link it will return an empty container
+      return Container();
+    }
+    return Image.network(//if it has a link it will return a network image
+      indexPicture,
+      width: width_,
+      height: height_,
+      fit: BoxFit.fill,
+    );
   }
 }
