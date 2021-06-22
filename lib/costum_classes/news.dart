@@ -9,12 +9,13 @@ class News{
   late String content;//content off the news
   late String indexPicture;//URL for the index picture
   late String newsPicture;
+  late String contentLink;
 
 
-  News(String publication, String title, String summary, String content, String indexpicture){
+  News(String publication, String title, String summary, String contentLink, String indexpicture){
     this.title=title;
     this.summary=summary;
-    this.content=content;
+    this.contentLink=contentLink;
     this.indexPicture=indexpicture;
     publicationTime=DateTime.parse(publication);
   }

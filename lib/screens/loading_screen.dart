@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mini_rss/backend/html_converter.dart';
 import 'package:mini_rss/backend/rss_to_news.dart';
+import 'package:mini_rss/costum_classes/news.dart';
 //this will be a loading screen whil the app loads the rss feed
 class Loading extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _LoadingState extends State<Loading> {
     await rr.setFeed();//waiting for the rss feed
     Navigator.pushReplacementNamed(context, '/listview', arguments: rr.news);
   }
+
 
   @override
   void initState() {

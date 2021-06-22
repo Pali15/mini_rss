@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mini_rss/backend/html_converter.dart';
 import 'package:mini_rss/costum_classes/news.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -18,9 +19,10 @@ class _NewsListViewState extends State<NewsListView> {
   List<News> news=[];
 
   //opens a news and deletes it
-  void openNews(News n){
+  void openNews(News n) async {
+    HtmlConverter c=new HtmlConverter();
+    n.content=await c.getData(n.contentLink);
     Navigator.pushNamed(context, '/detailed', arguments: n);//open
-
     setState(() {//delete
       news.remove(n);
     });

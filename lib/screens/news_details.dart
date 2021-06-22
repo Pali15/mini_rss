@@ -1,10 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_rss/costum_classes/news.dart';
 import 'package:mini_rss/backend/html_to_content.dart';
+import 'package:mini_rss/costum_classes/news.dart';
+import 'package:mini_rss/backend/html_converter.dart';
+import 'package:mini_rss/backend/html_converter.dart';
 
-class NewsDetails extends StatelessWidget {
+class NewsDetails extends StatefulWidget {
+  @override
+  _NewsDetailsState createState() => _NewsDetailsState();
+}
+
+class _NewsDetailsState extends State<NewsDetails> {
   late News news;
+
+  String content="";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +50,10 @@ class NewsDetails extends StatelessWidget {
               right: BorderSide(width: 3.0, color: Colors.black),
               bottom: BorderSide(width: 3.0, color: Colors.black),
             ),
-
           ),
-          child: Expanded(
-            child: Column(
-              children: [
-                HtmlToContent()
-              ],
-            ),
-          )
-        ),/*Column(
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -66,25 +75,20 @@ class NewsDetails extends StatelessWidget {
                   child: Text(
                     news.title,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28.0
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28.0
                     ),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                  child: /*HtmlToContent()*/Text("asd")
-                ),
-              )
+              Expanded(
+                  child: Container(
+                      child: SingleChildScrollView(child: Text(news.content)))),
             ],
-          ),
+          )),
         ),
-      ),*/
-      )
-    );
+      );
+
   }
 }
 

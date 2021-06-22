@@ -35,7 +35,7 @@ class RssToNewsConverter{
       //if the enclosure does not exist the link will be "none"
       String? link = item.enclosure == null ? "none" : item.enclosure!.url.toString();
 
-      News temp=News(item.pubDate.toString(), item.title.toString(),  item.description.toString(), "", link);
+      News temp=News(item.pubDate.toString(), item.title.toString(),  item.description.toString(), item.link.toString(), link);
 
       news.add(temp);
     }
