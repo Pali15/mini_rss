@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mini_rss/backend/html_to_content.dart';
 import 'package:mini_rss/costum_classes/news.dart';
 import 'package:mini_rss/backend/html_converter.dart';
 import 'package:mini_rss/backend/html_converter.dart';
@@ -24,7 +23,7 @@ class _NewsDetailsState extends State<NewsDetails> {
   @override
   Widget build(BuildContext context) {
 
-    news = ModalRoute.of(context)!.settings.arguments as News;//getting the news to show
+    news = ModalRoute.of(context)!.settings.arguments as News;//getting the news to show3
 
     return Scaffold(
       appBar: AppBar(
@@ -52,39 +51,45 @@ class _NewsDetailsState extends State<NewsDetails> {
             ),
           ),
 
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                child: news.getPicture(500, 200),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-                  child: Text(
-                    news.getTime(),
-                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: news.getPicture(500, 200),
                 ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
-                  child: Text(
-                    news.title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28.0
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+                    child: Text(
+                      news.getTime(),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                  child: Container(
-                      child: SingleChildScrollView(child: Text(news.content)))),
-            ],
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                    child: Text(
+                      news.title,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 28.0
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(5, 10, 5, 5),
+                    child: Text(
+                      news.content,
+                      textAlign: TextAlign.start,
+                    ),
+                ),
+              ],
+            ),
           )),
         ),
       );

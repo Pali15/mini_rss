@@ -20,9 +20,13 @@ class _NewsListViewState extends State<NewsListView> {
 
   //opens a news and deletes it
   void openNews(News n) async {
+    //getting the content from the news
     HtmlConverter c=new HtmlConverter();
+    //setting the content
     n.content=await c.getData(n.contentLink);
+
     Navigator.pushNamed(context, '/detailed', arguments: n);//open
+
     setState(() {//delete
       news.remove(n);
     });
@@ -30,6 +34,7 @@ class _NewsListViewState extends State<NewsListView> {
 
   @override
   Widget build(BuildContext context) {
+
     //get the news list
    setState(() {
      final t=ModalRoute.of(context)!.settings.arguments as List<News>;
